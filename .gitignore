@@ -1,0 +1,21 @@
+yarn-error.log
+.DS_Store
+.idea/
+node_modules/
+.vscode/
+.env
+/dist/
+.nyc_output/
+coverage/
+
+# Project generated files
+bundle.js
+bundle.min.js
+main.**
+main.**.js
+main.**.js.map
+vendors.**
+vendors.**.js
+vendors.**.js.map
+style.**.css
+style.**.css.map
