@@ -8,16 +8,18 @@
   "license": "MIT",
   "scripts": {
     "build": "webpack --mode production",
-    "build:dev": "webpack --mode development",
-    "dev:build-server": "NODE_ENV=development webpack --config webpack.server.js --mode=development -w",
-    "dev:start": "nodemon ./server-build/index.js",
-    "dev": "npm-run-all --parallel build:dev dev:*"
+    "build:dev": "webpack --mode development -w",
+    "dev": "npm-run-all --parallel build:dev dev:*",
+    "dev:start": "nodemon --watch build --exec  \"node ./build/index.js\"",
+    "dev:build-server": "webpack --config webpack.server.js --mode=development -w"
   },
   "dependencies": {
     "express": "^4.17.1",
+    "isomorphic-fetch": "^2.2.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "react-router-dom": "^5.0.1"
+    "react-router-dom": "^5.0.1",
+    "serialize-javascript": "^1.7.0"
   },
   "devDependencies": {
     "@babel/core": "^7.5.5",
