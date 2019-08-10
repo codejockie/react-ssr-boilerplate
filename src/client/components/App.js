@@ -5,6 +5,7 @@ import Home from './Home';
 import Posts from './Posts';
 import Todos from './Todos';
 import NotFound from './NotFound';
+import UsersList from '../containers/UsersList';
 
 export default props => {
   return (
@@ -29,6 +30,7 @@ export default props => {
         />
         <Route path="/todos" component={Todos} />
         <Route path="/posts" component={Posts} />
+        <Route path="/users" component={UsersList} />
         <Route component={NotFound} />
       </Switch>
     </div>

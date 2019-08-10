@@ -2,14 +2,17 @@ import React from 'react';
 import serialize from 'serialize-javascript';
 import { StaticRouter } from 'react-router-dom';
 import { renderToString } from 'react-dom/server';
+import { Provider } from 'react-redux';
 
 import App from '../components/App';
 
-export default ({ context, data, req }) => {
+export default ({ context, data, req }, store) => {
   const content = renderToString(
-    <StaticRouter location={req.path} context={context}>
-      <App />
-    </StaticRouter>
+    <Provider store={store}>
+      <StaticRouter location={req.path} context={context}>
+        <App />
+      </StaticRouter>
+    </Provider>
   );
 
   return `

@@ -1,8 +1,11 @@
+import 'core-js/stable';
+import 'regenerator-runtime/runtime';
 import express from 'express';
 import { matchPath } from 'react-router-dom';
 
 import Routes from '../client/routes';
 import renderer from '../client/helpers/renderer';
+import createStore from '../client/helpers/createStore';
 
 const PORT = process.env.PORT || 3006;
 const app = express();
@@ -10,6 +13,7 @@ const app = express();
 app.use(express.static('src/client/assets'));
 
 app.get('*', (req, res) => {
+  const store = createStore();
   const currentRoute = Routes.find(route => matchPath(req.url, route)) || {};
   let promise;
 
@@ -31,7 +35,7 @@ app.get('*', (req, res) => {
       return res.redirect(301, context.url);
     }
 
-    return res.send(renderer({ context, data, req }));
+    return res.send(renderer({ context, data, req }, store));
   });
 });
 
