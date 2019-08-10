@@ -7,7 +7,7 @@ node_modules/
 /dist/
 .nyc_output/
 coverage/
-server-build/
+build/
 
 # Project generated files
 bundle.js
