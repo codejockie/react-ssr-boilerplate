@@ -3,9 +3,9 @@ import Posts from './components/Posts';
 import Todos from './components/Todos';
 import NotFound from './components/NotFound';
 
-import loadData from './helpers/loadData';
+import UsersList, { loadData } from './containers/UsersList';
 
-const Routes = [
+export default [
   {
     path: '/',
     exact: true,
@@ -14,16 +14,17 @@ const Routes = [
   {
     path: '/posts',
     component: Posts,
-    loadData: () => loadData('posts')
   },
   {
     path: '/todos',
     component: Todos,
-    loadData: () => loadData('todos')
+  },
+  {
+    path: '/users',
+    component: UsersList,
+    loadData,
   },
   {
     component: NotFound
   }
 ];
-
-export default Routes;

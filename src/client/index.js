@@ -2,12 +2,13 @@ import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter } from 'react-router-dom';
 import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
+import { BrowserRouter } from 'react-router-dom';
+import { renderRoutes } from 'react-router-config';
 import { applyMiddleware, createStore } from 'redux';
 
-import App from 'components/App';
+import Routes from './routes';
 import reducers from './reducers';
 
 const store = createStore(reducers, {}, applyMiddleware(thunk));
@@ -15,7 +16,7 @@ const store = createStore(reducers, {}, applyMiddleware(thunk));
 ReactDOM.hydrate(
   <Provider store={store}>
     <BrowserRouter>
-      <App />
+      <div>{renderRoutes(Routes)}</div>
     </BrowserRouter>
   </Provider>,
   document.querySelector('#root')

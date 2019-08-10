@@ -2,6 +2,7 @@ import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 import express from 'express';
 import { matchPath } from 'react-router-dom';
+import { matchRoutes } from 'react-router-config';
 
 import Routes from '../client/routes';
 import renderer from '../client/helpers/renderer';
@@ -14,28 +15,10 @@ app.use(express.static('src/client/assets'));
 
 app.get('*', (req, res) => {
   const store = createStore();
-  const currentRoute = Routes.find(route => matchPath(req.url, route)) || {};
-  let promise;
-
-  if (currentRoute.loadData) {
-    promise = currentRoute.loadData();
-  } else {
-    promise = Promise.resolve(null);
-  }
-
-  promise.then(data => {
-    // Add the data to the context
-    const context = { data };
-
-    if (context.status === 404) {
-      res.status(404);
-    }
-
-    if (context.url) {
-      return res.redirect(301, context.url);
-    }
-
-    return res.send(renderer({ context, data, req }, store));
+  const promises = matchRoutes(Routes, req.url).map(({ route }) => (route.loadData ? route.loadData(store) : null));
+  
+  Promise.all(promises).then(() => {
+    res.send(renderer({ req }, store));
   });
 });
 
