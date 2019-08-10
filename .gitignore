@@ -20,3 +20,4 @@ vendors.**.js
 vendors.**.js.map
 style.**.css
 style.**.css.map
+*.hot-update.json
