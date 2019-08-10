@@ -10,11 +10,11 @@ export const getDevTool = ({ mode }) => (mode === DEVELOPMENT_ENV ? 'cheap-modul
 export const getEntry = ({ mode }) => {
   if (mode === DEVELOPMENT_ENV) {
     return [
-      './client/src/index.js'
+      './src/client/index.js'
     ];
   }
   return {
-    main: './client/src/index.js'
+    main: './src/client/index.js'
   };
 };
 
@@ -43,7 +43,7 @@ export const getEnvPlugins = ({ mode }) => {
 
 export const getFileName = ({ mode }) => {
   if (mode === DEVELOPMENT_ENV) {
-    return '[name].[hash].js';
+    return 'bundle.js';
   }
   return '[name].[chunkhash].js';
 };

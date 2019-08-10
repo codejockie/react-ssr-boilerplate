@@ -14,7 +14,7 @@ export default (_, argv) => ({
     'react/lib/ReactContext': 'react'
   },
   output: {
-    path: resolvePath('client/assets'),
+    path: resolvePath('src/client/assets'),
     filename: getFileName(argv),
     chunkFilename: getFileName(argv),
     publicPath: '/'
@@ -24,7 +24,6 @@ export default (_, argv) => ({
     rules: [
       {
         test: /(\.js$)/,
-        include: resolvePath('client/src'),
         exclude: /node_modules/,
         use: [
           {
@@ -75,7 +74,7 @@ export default (_, argv) => ({
   ...getOptimisers(argv),
   resolve: {
     extensions: ['.js', '.json', '.jsx'],
-    modules: [__dirname, 'src', 'node_modules'],
+    modules: [__dirname, 'src/client', 'node_modules'],
   },
   plugins: [
     new webpack.optimize.OccurrenceOrderPlugin(),
