@@ -1,7 +1,6 @@
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 import express from 'express';
-import { matchPath } from 'react-router-dom';
 import { matchRoutes } from 'react-router-config';
 
 import Routes from '../client/routes';
