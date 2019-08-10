@@ -27,8 +27,8 @@ export default ({ data, req }, store) => {
   </head>
   <body>
     <div id="root">${content}</div>
+    <script>window.INITIAL_STATE = ${serialize(store.getState())}</script>
     <script src="bundle.js"></script>
-    <script>window.__ROUTE_DATA__ = ${serialize(data)}</script>
   </body>
   </html>
   `;
