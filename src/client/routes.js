@@ -1,15 +1,15 @@
-import Home from './components/Home';
 import Posts from './components/Posts';
 import Todos from './components/Todos';
 import NotFound from './components/NotFound';
 
-import UsersList, { loadData } from './containers/UsersList';
+import HomePage from './pages/HomePage';
+import UsersListPage from './pages/UsersListPage';
 
 export default [
   {
     path: '/',
     exact: true,
-    component: Home
+    ...HomePage
   },
   {
     path: '/posts',
@@ -21,8 +21,7 @@ export default [
   },
   {
     path: '/users',
-    component: UsersList,
-    loadData,
+    ...UsersListPage
   },
   {
     component: NotFound
