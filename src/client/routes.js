@@ -1,29 +1,29 @@
-import Posts from './components/Posts';
-import Todos from './components/Todos';
-import NotFound from './components/NotFound';
-
+import App from './App';
 import HomePage from './pages/HomePage';
 import UsersListPage from './pages/UsersListPage';
+import NotFoundPage from './pages/NotFoundPage';
+import AdminsListPage from './pages/AdminsListPage';
 
 export default [
   {
-    path: '/',
-    exact: true,
-    ...HomePage
-  },
-  {
-    path: '/posts',
-    component: Posts,
-  },
-  {
-    path: '/todos',
-    component: Todos,
-  },
-  {
-    path: '/users',
-    ...UsersListPage
-  },
-  {
-    component: NotFound
+    ...App,
+    routes: [
+      {
+        ...HomePage,
+        exact: true,
+        path: '/',
+      },
+      {
+        ...UsersListPage,
+        path: '/users',
+      },
+      {
+        ...AdminsListPage,
+        path: '/admins',
+      },
+      {
+        ...NotFoundPage
+      }
+    ]
   }
 ];

@@ -7,11 +7,11 @@ import { renderRoutes } from 'react-router-config';
 
 import Routes from '../routes';
 
-export default ({ data, req }, store) => {
+export default ({ req }, store, context) => {
   const content = renderToString(
     <Provider store={store}>
-      <StaticRouter location={req.path} context={{}}>
-        <div>{renderRoutes(Routes)}</div>
+      <StaticRouter location={req.path} context={context}>
+        {renderRoutes(Routes)}
       </StaticRouter>
     </Provider>
   );
@@ -23,6 +23,7 @@ export default ({ data, req }, store) => {
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="theme-color" content="#000000">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
     <title>React SSR App</title>
   </head>
   <body>
