@@ -2,12 +2,17 @@ import webpack from 'webpack';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 
 import {
-  getDevTool, getEntry, getEnvPlugins, getFileName, getOptimisers, resolvePath
+  entry,
+  devTool,
+  plugins,
+  fileName,
+  optimisers,
+  resolvePath
 } from './webpackHelpers';
 
 export default (_, argv) => ({
-  devtool: getDevTool(argv),
-  entry: getEntry(argv),
+  devtool: devTool(argv),
+  entry: entry(argv),
   externals: {
     'react/addons': 'react',
     'react/lib/ExecutionEnvironment': 'react',
@@ -15,8 +20,8 @@ export default (_, argv) => ({
   },
   output: {
     path: resolvePath('src/client/assets'),
-    filename: getFileName(argv),
-    chunkFilename: getFileName(argv),
+    filename: fileName(argv),
+    chunkFilename: fileName(argv),
     publicPath: '/'
   },
   mode: argv.mode,
@@ -71,7 +76,7 @@ export default (_, argv) => ({
       }
     ]
   },
-  ...getOptimisers(argv),
+  ...optimisers(argv),
   resolve: {
     extensions: ['.js', '.json', '.jsx'],
     modules: [__dirname, 'src/client', 'node_modules'],
@@ -83,6 +88,6 @@ export default (_, argv) => ({
       filename: '[name].[hash].css',
       chunkFilename: '[id].[hash].css'
     }),
-    ...getEnvPlugins(argv)
+    ...plugins(argv)
   ]
 });

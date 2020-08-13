@@ -5,61 +5,38 @@ export const DEVELOPMENT_ENV = 'development';
 export const PRODUCTION_ENV = 'production';
 
 export const resolvePath = dir => path.resolve(__dirname, dir);
-export const getDevTool = ({ mode }) => (mode === DEVELOPMENT_ENV ? 'cheap-module-eval-sourcemap' : 'source-map');
+export const devTool = ({ mode }) => (mode === DEVELOPMENT_ENV ? 'cheap-module-eval-sourcemap' : 'source-map');
 
-export const getEntry = ({ mode }) => {
-  if (mode === DEVELOPMENT_ENV) {
-    return [
-      './src/client/index.js'
-    ];
-  }
-  return {
-    main: './src/client/index.js'
-  };
+export const entry = ({ mode }) => {
+  return mode === DEVELOPMENT_ENV ? ['./src/client/index.js'] : { main: './src/client/index.js' };
 };
 
-export const getEnvPlugins = ({ mode }) => {
-  if (mode === PRODUCTION_ENV) {
-    return [
-      new webpack.DefinePlugin({
-        'process.env': {
-          NODE_ENV: JSON.stringify(PRODUCTION_ENV)
-        }
-      })
-    ];
-  }
-  // Excluding hot module in production fixes
-  // EventSource's response has a MIME type ('text/html')
-  // that is not 'text/event-stream'. Aborting the connection. error
-  return [
-    new webpack.HotModuleReplacementPlugin(),
+export const plugins = ({ mode }) => {
+  const isProd = mode === PRODUCTION_ENV
+  const plugins = [
     new webpack.DefinePlugin({
       'process.env': {
-        NODE_ENV: JSON.stringify(DEVELOPMENT_ENV)
+        NODE_ENV: JSON.stringify(isProd ? PRODUCTION_ENV : DEVELOPMENT_ENV)
       }
     })
-  ];
+  ]
+
+  if (!isProd) {
+    // Excluding hot module in production fixes EventSource's response has a MIME type ('text/html')
+    // that is not 'text/event-stream'. Aborting the connection. error
+    plugins.push(new webpack.HotModuleReplacementPlugin());
+  }
+  return plugins;
 };
 
-export const getFileName = ({ mode }) => {
-  if (mode === DEVELOPMENT_ENV) {
-    return 'bundle.js';
-  }
-  return '[name].[chunkhash].js';
+export const fileName = ({ mode }) => {
+  return mode === DEVELOPMENT_ENV ? 'bundle.js' : '[name].[chunkhash].js';
 };
 
-export const getOptimisers = ({ mode }) => {
-  if (mode !== PRODUCTION_ENV) {
-    return {
-      optimization: {
-        minimize: false
-      }
-    };
-  }
-
+export const optimisers = ({ mode }) => {
   return {
     optimization: {
-      minimize: true,
+      minimize: !(mode !== PRODUCTION_ENV),
       runtimeChunk: false,
       splitChunks: {
         cacheGroups: {
